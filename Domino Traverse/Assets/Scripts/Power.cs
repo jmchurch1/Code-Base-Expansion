@@ -65,17 +65,17 @@ public class Power : MonoBehaviour
 		if(!Player.i.lockPower.activeInHierarchy)
 		{
 			//@ Run ability when press 1 to 5 and only work if it button are interactable
-			if(Input.GetKeyDown(KeyCode.Alpha1))
+			if(Input.GetKeyDown(InputManager.GetActionKey("GroundJump")))
 			{
 				//Able to use air jump while not on the ground
 				if(airJumpButton.interactable && !Player.i.isGround) {Jumping();}
 				//Jump if on the ground
 				if(Player.i.isGround) {Jumping();}
 			}
-			if(Input.GetKeyDown(KeyCode.Alpha2)&&boostButton.interactable) {Boosting();}
-			if(Input.GetKey(KeyCode.Alpha3)&&blockButton.interactable) {Block();}
-			if(Input.GetKey(KeyCode.Alpha4)&&lockButton.interactable) {Locking();}
-			if(Input.GetKey(KeyCode.Alpha5)) {Freezing();}
+			if(Input.GetKeyDown(InputManager.GetActionKey("Boost"))&&boostButton.interactable) {Boosting();}
+			if(Input.GetKey(InputManager.GetActionKey("Block")) &&blockButton.interactable) {Block();}
+			if(Input.GetKey(InputManager.GetActionKey("Lock")) &&lockButton.interactable) {Locking();}
+			if(Input.GetKey(InputManager.GetActionKey("Freeze"))) {Freezing();}
 		}
 	}
 

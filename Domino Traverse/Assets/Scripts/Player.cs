@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
 	Vector2 prevPos;
 
 	//Make player into singleton and reset time scale
-	void Awake() {Time.timeScale = 1;i = this;}
+	void Awake() {Time.timeScale = 1;i = this;InputManager.InitializeDictionary(); } // initilization added by Josh
 
 	void Update()
 	{
