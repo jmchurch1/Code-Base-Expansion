@@ -7,22 +7,24 @@ public static class InputManager
 {
     static Dictionary<string, string> keyDictionary;
 
-    static string[] keyMaps = new string[5]
+    static string[] keyMaps = new string[6]
     {
         "GroundJump",
         "Boost",
         "Block",
         "Lock",
-        "Freeze"
+        "Freeze",
+        "Slow"
     };
 
-    static string[] defaults = new string[5]
+    static string[] defaults = new string[6]
     {
         "1",
         "2",
         "3",
         "4",
-        "5"
+        "5",
+        "6"
     };
 
     public static void InitializeDictionary()

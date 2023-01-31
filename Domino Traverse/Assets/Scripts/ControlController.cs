@@ -11,6 +11,7 @@ public class ControlController : MonoBehaviour
     [SerializeField] InputField Block;
     [SerializeField] InputField Lock;
     [SerializeField] InputField Freeze;
+    [SerializeField] InputField Slow;
 
     public void SaveGroundJump()
     {
@@ -41,5 +42,11 @@ public class ControlController : MonoBehaviour
     {
         InputManager.UpdateDictionary("Freeze", Freeze.text);
         PlayerPrefs.SetString("Freeze", Freeze.text);
+    }
+
+    public void SaveSlow()
+    {
+        InputManager.UpdateDictionary("Slow", Slow.text);
+        PlayerPrefs.SetString("Slow", Slow.text);
     }
 }

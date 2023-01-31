@@ -29,6 +29,11 @@ public class Power : MonoBehaviour
 		public float freezeDuration; float freezeCounter;
 		public bool freezed;
 		public Image freezeProgress;
+	[Header("Time Slow")]
+		public int slowCost;
+		public float slowDuration;
+		public bool slowed;
+		public Image slowProgress;
 	[Header("Interface")]
 	public TextMeshProUGUI groundJumpCostUI;
 	public TextMeshProUGUI airJumpCostUI, boostCostUI, lockCostUI, blockCostUI, freezeCostUI;
@@ -76,6 +81,7 @@ public class Power : MonoBehaviour
 			if(Input.GetKey(InputManager.GetActionKey("Block")) &&blockButton.interactable) {Block();}
 			if(Input.GetKey(InputManager.GetActionKey("Lock")) &&lockButton.interactable) {Locking();}
 			if(Input.GetKey(InputManager.GetActionKey("Freeze"))) {Freezing();}
+			if(Input.GetKey(InputManager.GetActionKey("Slow"))) { Slowing(); }
 		}
 	}
 
@@ -250,5 +256,14 @@ public class Power : MonoBehaviour
 				}
 			}
 		}
-	#endregion
+    #endregion
+
+    #region Time Slow
+
+	public void Slowing()
+	{
+
+	}
+
+    #endregion
 }
