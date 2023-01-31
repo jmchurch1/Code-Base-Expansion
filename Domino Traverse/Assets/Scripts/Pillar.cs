@@ -16,6 +16,8 @@ public class Pillar : MonoBehaviour
 	[SerializeField] bool golden;
 	[SerializeField] AudioClip goldenGet;
 
+	bool exploded = false;
+
 	void Start()
 	{
 		//Get the gameplay, player and point
@@ -54,6 +56,26 @@ public class Pillar : MonoBehaviour
 		if(player.power.freezed) {rb.bodyType = RigidbodyType2D.Static;render.color = freezeColor;}
 		//Change rigid body back to dynamic if power are unfreezed then reset to default color
 		else if(!locked) {rb.bodyType = RigidbodyType2D.Dynamic; render.color = defaultColor;}
+
+		// Josh added code
+		if (!exploded)
+		{
+			ExplosionChance();
+		}
+		// if the pillar has exploded
+		else
+		{
+			// start shrinking the pillar
+			transform.localScale = new Vector3(.95f * transform.localScale.x, .95f * transform.localScale.y, .95f * transform.localScale.z);
+			// destroy the pillar once it has become small enough
+			if (transform.localScale.x < .01)
+			{
+				// original structure did not assume destroyed pillars, so this will allow the pillar amount to be consistent
+                generate.NextPillar();
+                Destroy(gameObject);
+			}
+
+		}
 	}
 
 	public void GettingPoint() 
@@ -62,5 +84,22 @@ public class Pillar : MonoBehaviour
 		if(!golden) {point.IncreasePassPoint();}
 		//Increase golen power if it is golden
 		else {point.IncreaseGoldenPower();SoundManager.i.source.PlayOneShot(goldenGet);}
+	}
+
+	public void ExplosionChance()
+	{
+		float value = Random.Range(0f, 4000f);
+		// player can see column and the 1/4000 chance occurs
+		if (value < 1f && Vector2.Distance(player.transform.position, transform.position) < 50) 
+		{
+            float explosionPower = Random.Range(500,600);
+            Vector2 explosionDirection = new Vector2(Random.Range(-.1f,.1f), 1);
+
+			rb.AddForce(explosionPower * explosionDirection);
+			rb.AddTorque(explosionPower);
+			rb.gravityScale = 0.4f;
+
+			exploded = true;
+        }
 	}
 }
