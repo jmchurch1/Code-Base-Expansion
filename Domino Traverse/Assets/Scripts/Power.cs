@@ -31,14 +31,14 @@ public class Power : MonoBehaviour
 		public Image freezeProgress;
 	[Header("Time Slow")]
 		public int slowCost;
-		public float slowDuration;
+		public float slowDuration; float slowCounter;
 		public bool slowed;
 		public Image slowProgress;
 	[Header("Interface")]
 	public TextMeshProUGUI groundJumpCostUI;
-	public TextMeshProUGUI airJumpCostUI, boostCostUI, lockCostUI, blockCostUI, freezeCostUI;
-	public Button groundJumpButton, airJumpButton, boostButton, blockButton, lockButton, freezeButton;
-	public AudioClip jumpSound, boostSound, lockSound, blockSound, freezeSound;
+	public TextMeshProUGUI airJumpCostUI, boostCostUI, lockCostUI, blockCostUI, freezeCostUI, slowCostUI;
+	public Button groundJumpButton, airJumpButton, boostButton, blockButton, lockButton, freezeButton, slowButton;
+	public AudioClip jumpSound, boostSound, lockSound, blockSound, freezeSound, slowSound;
 	Rigidbody2D rb;
 	Vector2 mousePos;
 	Player p;
@@ -54,6 +54,7 @@ public class Power : MonoBehaviour
 		lockCostUI.text = lockCost.ToString();
 		blockCostUI.text = blockCost.ToString();
 		freezeCostUI.text = freezeCost.ToString();
+		slowCostUI.text = slowCost.ToString();
 	}
 
 	void Update()
@@ -65,7 +66,7 @@ public class Power : MonoBehaviour
 		//Control the cost
 		CostManagement();
 		//Run power function
-		JumpChange(); PlacingBlock(); StartLocking(); BeginFreeze();
+		JumpChange(); PlacingBlock(); StartLocking(); BeginFreeze(); BeginSlow();
 		//The power are not been lock
 		if(!Player.i.lockPower.activeInHierarchy)
 		{
@@ -100,6 +101,8 @@ public class Power : MonoBehaviour
 		else {lockButton.interactable = false;}
 		if(powerPoint >= freezeCost) {freezeButton.interactable = true;}
 		else {freezeButton.interactable = false;}
+		if (powerPoint >= slowCost) { slowButton.interactable = true; }
+		else { slowButton.interactable = false; }
 	}
 
 	#region Jump
@@ -260,9 +263,42 @@ public class Power : MonoBehaviour
 
     #region Time Slow
 
+	public void BeginSlow()
+	{
+		if (slowed)
+		{
+			Debug.Log(1 - (slowCounter / slowDuration));
+			// display the slow progress slowly decreasing
+			slowProgress.fillAmount = 1 - (slowCounter / slowDuration);
+			if (Time.timeScale != 0)
+				Time.timeScale = .7f;
+
+			slowCounter += Time.timeScale;
+			// if slow counter has reached its duration
+			if (slowCounter >= slowDuration)
+			{
+				// reset the timescale
+				Time.timeScale = 1;
+				// reset the slow counter
+				slowCounter -= slowCounter;
+				// stop the slow
+				slowed = false;
+				// Reset the slow progress
+				slowProgress.fillAmount = 1;
+			}
+		}
+	}
 	public void Slowing()
 	{
-
+		if (!slowed && powerPoint >= slowCost)
+		{
+			// begin slowing
+			slowed = true;
+			// decrement points
+			powerPoint -= slowCost;
+			// play sound
+			// SoundManager.i.source.PlayOneShot(slowSound);
+		}
 	}
 
     #endregion
