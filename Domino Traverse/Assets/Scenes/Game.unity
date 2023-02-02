@@ -9607,7 +9607,7 @@ PrefabInstance:
         type: 3}
       propertyPath: slowProgress
       value: 
-      objectReference: {fileID: 501017403}
+      objectReference: {fileID: 1264944200}
     - target: {fileID: 1077086259346342104, guid: 8f82639185320f143b2452abdfcafd13,
         type: 3}
       propertyPath: airJumpButton

@@ -267,13 +267,13 @@ public class Power : MonoBehaviour
 	{
 		if (slowed)
 		{
-			Debug.Log(1 - (slowCounter / slowDuration));
+			Debug.Log(slowed);
 			// display the slow progress slowly decreasing
 			slowProgress.fillAmount = 1 - (slowCounter / slowDuration);
 			if (Time.timeScale != 0)
 				Time.timeScale = .7f;
 
-			slowCounter += Time.timeScale;
+			slowCounter += Time.deltaTime / .7f;
 			// if slow counter has reached its duration
 			if (slowCounter >= slowDuration)
 			{
@@ -287,6 +287,7 @@ public class Power : MonoBehaviour
 				slowProgress.fillAmount = 1;
 			}
 		}
+		Debug.Log(slowed);
 	}
 	public void Slowing()
 	{
